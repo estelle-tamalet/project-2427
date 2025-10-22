@@ -98,4 +98,74 @@ impl TicTacToe {
         }
         empty_cells
     }
+
+    pub fn unplace(&mut self, row: usize, col: usize) {
+        if row < SIZE && col < SIZE {
+            self.board[row][col] = Cell::Empty;
+        }
+    }
+
+    pub fn evaluate(&self) -> i32 {
+        if let Some(winner) = self.check_winner() {
+            match winner {
+                Cell::O => 10,  // L'ordinateur (O) gagne
+                Cell::X => -10, // Le joueur humain (X) gagne
+                Cell::Empty => 0,
+            }
+        } else {
+            0 // Match nul ou jeu non terminé
+        }
+    }
+
+    pub fn minimax(&mut self, is_maximizing: bool) -> i32 {
+        // Vérifier si le jeu est terminé
+        let score = self.evaluate();
+        if score == 10 || score == -10 {
+            return score;
+        }
+
+        if self.is_full() {
+            return 0; // Match nul
+        }
+
+        if is_maximizing {
+            // Tour de l'ordinateur (O) - maximiser le score
+            let mut best_score = i32::MIN;
+            for (row, col) in self.get_empty_cells() {
+                self.board[row][col] = Cell::O;
+                let score = self.minimax(false);
+                self.board[row][col] = Cell::Empty;
+                best_score = best_score.max(score);
+            }
+            best_score
+        } else {
+            // Tour du joueur (X) - minimiser le score
+            let mut best_score = i32::MAX;
+            for (row, col) in self.get_empty_cells() {
+                self.board[row][col] = Cell::X;
+                let score = self.minimax(true);
+                self.board[row][col] = Cell::Empty;
+                best_score = best_score.min(score);
+            }
+            best_score
+        }
+    }
+
+    pub fn find_best_move(&mut self) -> Option<(usize, usize)> {
+        let mut best_score = i32::MIN;
+        let mut best_move = None;
+
+        for (row, col) in self.get_empty_cells() {
+            self.board[row][col] = Cell::O;
+            let score = self.minimax(false);
+            self.board[row][col] = Cell::Empty;
+
+            if score > best_score {
+                best_score = score;
+                best_move = Some((row, col));
+            }
+        }
+
+        best_move
+    }
 }
