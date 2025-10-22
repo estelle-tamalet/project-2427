@@ -86,4 +86,16 @@ impl TicTacToe {
 
         None
     }
+
+    pub fn get_empty_cells(&self) -> Vec<(usize, usize)> {
+        let mut empty_cells = Vec::new();
+        for i in 0..SIZE {
+            for j in 0..SIZE {
+                if self.board[i][j] == Cell::Empty {
+                    empty_cells.push((i, j));
+                }
+            }
+        }
+        empty_cells
+    }
 }
