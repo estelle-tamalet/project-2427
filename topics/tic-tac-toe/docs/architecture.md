@@ -11,7 +11,6 @@ The main goals of this project are:
 - Implement two AI opponents: one that plays randomly and one using the Minimax algorithm
 - Demonstrate the Minimax algorithm for perfect play in a zero-sum game
 - Implement game logic with proper validation and win detection
-- Demonstrate clean code architecture with separation of concerns
 
 ## Components and Modules
 
@@ -243,33 +242,8 @@ X  .  O
 O  .  X
 ```
 
-## Future Enhancements
-
-Potential improvements to the project:
-- Implement alpha-beta pruning to optimize Minimax performance
-- Add difficulty levels (easy, medium, hard) with varying AI strategies
-- Support for different board sizes (4x4, 5x5)
-- Save/load game state functionality
-- Network multiplayer support
-- Graphical user interface (GUI) using a framework like egui or iced
-- Game statistics tracking (wins, losses, draws)
-- Undo/redo move functionality
-- Time limits per move
-- Tournament mode with multiple rounds
-
 ## Dependencies
 
 The project uses the following external dependencies:
 
 - **`rand`** (version 0.8): Used for random number generation in the random AI opponent mode
-
-## Performance Notes
-
-- The random AI opponent has instant move selection (O(1) after getting empty cells)
-- The Minimax AI explores the entire game tree but remains fast due to the small state space of Tic-Tac-Toe
-- Typical Minimax computation time: < 100ms even in early game states
-- No optimization techniques (like alpha-beta pruning) are currently implemented, but performance is already excellent for this game size
-
-## Conclusion
-
-This Tic-Tac-Toe implementation demonstrates fundamental concepts in game AI, including the Minimax algorithm for perfect play. The modular architecture allows for easy extension and modification, making it an excellent foundation for learning about game theory and AI decision-making algorithms.
